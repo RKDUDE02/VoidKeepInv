@@ -1,0 +1,6 @@
+name: Voidkeepinv
+version: '1.0'
+main: com.rk_dude02.keepinv
+api-version: 1.19
+description: A plugin that allows players to keep their inventory if they die from the void!
+author: RK_Dude02
