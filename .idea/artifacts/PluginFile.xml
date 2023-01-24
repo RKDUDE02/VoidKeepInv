@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PluginFile">
+    <output-path>$PROJECT_DIR$/out/artifacts/PluginFile</output-path>
+    <root id="archive" name="PluginFile.jar">
+      <element id="module-output" name="voidkeepinv" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bstats/bstats-base/3.0.0/bstats-base-3.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bstats/bstats-bukkit/3.0.0/bstats-bukkit-3.0.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

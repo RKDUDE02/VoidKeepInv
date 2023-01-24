@@ -1,6 +1,9 @@
 package com.rk_dude02;
 
-
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,11 +17,14 @@ public final class keepinv extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        getLogger().info("Welcome to VoidKeepInv, created by RK_Dude02");
+        this.saveDefaultConfig();
+        getLogger().info("Welcome to VoidKeepInv 1.1, created by RK_Dude02");
         getLogger().info("VoidKeepInv is starting...");
         getLogger().info("Registering Listeners and enabling bStats Metrics");
         getServer().getPluginManager().registerEvents(this, this);
         Metrics metrics = new Metrics(this, pluginID);
+        getLogger().info("Registering Reload Config Command");
+        this.getCommand("vkireload").setExecutor(new CommandReloadConfig());
         getLogger().info("VoidkeepInv is ready! Enjoy!");
     }
 
@@ -33,11 +39,34 @@ public final class keepinv extends JavaPlugin implements Listener {
         Player p = e.getEntity();
         if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.VOID) {
             String pName = p.getDisplayName();
-            getLogger().info(pName + " died from the void. They will receive their items back when they respawn.");
-            e.setKeepLevel(true);
+            Boolean logConsoleVoidDeath = this.getConfig().getBoolean("logVoidDeathsToConsole");
+            if (logConsoleVoidDeath) {
+                getLogger().info(pName + " died from the void. They will receive their items back when they respawn.");
+            }
+            Boolean restorePlayerXP = this.getConfig().getBoolean("restorePlayerXP");
+            if (restorePlayerXP) {
+                e.setKeepLevel(true);
+            }
             e.setDroppedExp(0);
             e.getDrops().clear();
             e.setKeepInventory(true);
+            Boolean tellPlayerItemsRestored = this.getConfig().getBoolean("tellPlayerItemsRestored");
+            if (tellPlayerItemsRestored) {
+                p.sendMessage(ChatColor.GREEN + "Your inventory will be restored when you respawn because you died to the void!");
+            }
+            Boolean tellPlayerNotRestored = this.getConfig().getBoolean("tellPlayerNotRestored");
+            if (tellPlayerNotRestored && !restorePlayerXP) {
+                p.sendMessage(ChatColor.RED + "Unfortunately, we cannot restore your XP due to settings enforced by your Administrator.");
+            }
+        }
+    }
+    public class CommandReloadConfig implements CommandExecutor {
+        // This method is called when somebody reloads the config for VoidKeepInv using /vkireload
+        @Override
+        public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+            reloadConfig();
+            sender.sendMessage(ChatColor.GREEN + "Config Reloaded!");
+            return true;
         }
     }
 }

@@ -1,0 +1,23 @@
+############################
+#      PLUGIN SETTINGS     #
+###########################
+
+
+# Do you want to tell the player that their items will be restored because they died in the void?
+# DEFAULT: true
+tellPlayerItemsRestored: true
+
+# Do you want to log in the console that VoidKeepInv has acknowledged
+# that a player has died to the void?
+# NOTE: Useful for debugging purposes
+# DEFAULT: true
+logVoidDeathsToConsole: true
+
+# Do you want players to have their XP restored by this plugin when they die to the void?
+# DEFAULT: true
+restorePlayerXP: true
+
+# Do you want players to be told what is not restored along with telling them that their items will be restored.
+# EXAMPLE: Player dies from void, config says to not restore XP, so player is told that XP cannot be restored.
+# DEFAULT: true
+tellPlayerNotRestored: true
